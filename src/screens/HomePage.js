@@ -6,7 +6,6 @@ const HomePage = () => {
   return (
     <View>
       <Text>HomePage</Text>
-      <DemoPage />
     </View>
   );
 };
