@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 const logo = require("../images/logo.png");
 
-const HomeButton = ({ title = "TITLE", flexGrow = 0 }) => {
-  const Background = styled.View`
+const MenuButton = ({ title = "TITLE", flexGrow = 0, onPress }) => {
+  const Background = styled.TouchableOpacity`
     background-color: #bfcba8;
     padding: 20px;
     margin: 5px;
@@ -17,7 +17,7 @@ const HomeButton = ({ title = "TITLE", flexGrow = 0 }) => {
   `;
 
   return (
-    <Background>
+    <Background onPress={onPress}>
       <Icon source={logo} />
       <Heading>{title}</Heading>
     </Background>
@@ -35,4 +35,4 @@ const Heading = styled.Text`
   color: #464f41;
 `;
 
-export default HomeButton;
+export default MenuButton;

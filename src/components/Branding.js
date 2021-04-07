@@ -8,7 +8,7 @@ const Branding = () => {
     <StyledView>
       <Logo source={logo} />
       <TextWrapper>
-        <AppName>Flowers Recognition</AppName>
+        <AppName>Nhận diện loài hoa</AppName>
         <Sub>Khoa CNTT - Đại học Đà Lạt</Sub>
       </TextWrapper>
     </StyledView>
@@ -34,13 +34,13 @@ const TextWrapper = styled.View`
   flex: 1;
 `;
 const AppName = styled.Text`
-  font-size: 20;
+  font-size: 20px;
   font-weight: bold;
   color: white;
 `;
 
 const Sub = styled.Text`
-  font-size: 16;
+  font-size: 16px;
   color: white;
 `;
 

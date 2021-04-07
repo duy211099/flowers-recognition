@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { SafeAreaView, View, Text } from "react-native";
 // screens
 import HomePage from "./src/screens/HomePage";
-import DemoPage from "./src/screens/DemoPage";
+import CameraPage from "./src/screens/CameraPages/CameraPage";
 import CollectionPage from "./src/screens/CollectionPage";
 import MomentPage from "./src/screens/MomentPage";
 import SettingPage from "./src/screens/SettingPage";
@@ -47,7 +47,7 @@ const App = () => {
         />
         <Tab.Screen
           name=" "
-          component={DemoPage}
+          component={CameraPage}
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <View
@@ -89,7 +89,6 @@ const App = () => {
           name="Cài đặt"
           component={SettingPage}
           options={{
-            tabBarLabel: "Home",
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="cog" color={color} size={size} />
             ),

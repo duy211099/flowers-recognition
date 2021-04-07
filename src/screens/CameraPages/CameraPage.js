@@ -16,11 +16,14 @@ import {
 // Import Image Picker
 // import ImagePicker from 'react-native-image-picker';
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
-import RNPytorch from "../../react-native-pytorch";
+import RNPytorch from "../../../react-native-pytorch";
+import styled from "styled-components/native";
+// components
+import Spacer from "../../components/Spacer";
+import Branding from "../../components/Branding";
+import MenuButton from "../../components/MenuButton";
 
-const img = require("../../assets/image.jpg");
-
-const DemoPage = () => {
+const CameraPage = () => {
   const [filePath, setFilePath] = useState({});
   const requestCameraPermission = async () => {
     if (Platform.OS === "android") {
@@ -63,12 +66,12 @@ const DemoPage = () => {
   const captureImage = async (type) => {
     let options = {
       mediaType: type,
-      maxWidth: 300,
-      maxHeight: 550,
+      maxWidth: 224,
+      maxHeight: 224,
       quality: 1,
       videoQuality: "low",
       durationLimit: 30, //Video max duration in seconds
-      saveToPhotos: true,
+      saveToPhotos: false,
     };
     let isCameraPermitted = await requestCameraPermission();
     let isStoragePermitted = await requestExternalWritePermission();
@@ -89,13 +92,13 @@ const DemoPage = () => {
           alert(response.errorMessage);
           return;
         }
-        console.log("base64 -> ", response.base64);
-        console.log("uri -> ", response.uri);
-        console.log("width -> ", response.width);
-        console.log("height -> ", response.height);
-        console.log("fileSize -> ", response.fileSize);
-        console.log("type -> ", response.type);
-        console.log("fileName -> ", response.fileName);
+        // console.log("base64 -> ", response.base64);
+        // console.log("uri -> ", response.uri);
+        // console.log("width -> ", response.width);
+        // console.log("height -> ", response.height);
+        // console.log("fileSize -> ", response.fileSize);
+        // console.log("type -> ", response.type);
+        // console.log("fileName -> ", response.fileName);
         setFilePath(response);
       });
     }
@@ -103,8 +106,8 @@ const DemoPage = () => {
   const chooseFile = (type) => {
     let options = {
       mediaType: type,
-      maxWidth: 300,
-      maxHeight: 550,
+      maxWidth: 224,
+      maxHeight: 224,
       quality: 1,
     };
     launchImageLibrary(options, (response) => {
@@ -123,13 +126,13 @@ const DemoPage = () => {
         alert(response.errorMessage);
         return;
       }
-      console.log("base64 -> ", response.base64);
-      console.log("uri -> ", response.uri);
-      console.log("width -> ", response.width);
-      console.log("height -> ", response.height);
-      console.log("fileSize -> ", response.fileSize);
-      console.log("type -> ", response.type);
-      console.log("fileName -> ", response.fileName);
+      // console.log("base64 -> ", response.base64);
+      // console.log("uri -> ", response.uri);
+      // console.log("width -> ", response.width);
+      // console.log("height -> ", response.height);
+      // console.log("fileSize -> ", response.fileSize);
+      // console.log("type -> ", response.type);
+      // console.log("fileName -> ", response.fileName);
       setFilePath(response);
     });
   };
@@ -145,63 +148,81 @@ const DemoPage = () => {
     });
   }
 
-  const rsImg = Image.resolveAssetSource(img);
-  const rsImg1 = Image.resolveAssetSource(require("../../assets/image1.jpg"));
   return (
-    <View>
-      <Image source={{ uri: filePath.uri }} />
-      <Button
-        title="Nhào vô!!"
-        onPress={async () => {
-          const result = await RNPytorch.predict(filePath.uri);
-          setResult((prevValue) => {
-            return {
-              ...prevValue,
-              label: result[0].label,
-              score: result[0].confidence,
-            };
-          });
+    <Page>
+      <Branding />
+      <Spacer />
+      <MenuButton title="Giới thiệu" />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          width: "100%",
         }}
-      />
-      <View>
-        <Image style={{ height: 200 }} source={{ uri: filePath.uri }} />
-        <Text
-          style={{
-            color: "blue",
-            fontWeight: "bold",
-            fontSize: 30,
-          }}
-        >
-          {result.label} - {result.score}
-        </Text>
-        <Text>{filePath.uri}</Text>
-        <TouchableOpacity onPress={() => captureImage("photo")}>
-          <Text>Launch Camera for Image</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => captureImage("video")}
-        >
-          <Text>Launch Camera for Video</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
+      >
+        <MenuButton
+          flexGrow="3"
+          title="Chụp Ảnh"
+          onPress={() => captureImage("photo")}
+        />
+        <MenuButton
+          flexGrow="1"
+          title="Đăng Ảnh"
           onPress={() => {
             chooseFile("photo");
-            console.log("Ngu");
           }}
-        >
-          <Text> Choose Image</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => chooseFile("video")}
-        >
-          <Text> Choose Video</Text>
-        </TouchableOpacity>
+        />
       </View>
-    </View>
+      <MenuButton title="Nhận diện Realtime" />
+
+      <View>
+        <Image source={{ uri: filePath.uri }} />
+        <Button
+          title="Nhào vô!!"
+          onPress={async () => {
+            const result = await RNPytorch.predict(filePath.uri);
+            setResult((prevValue) => {
+              return {
+                ...prevValue,
+                label: result[0].label,
+                score: result[0].confidence,
+              };
+            });
+          }}
+        />
+        <View>
+          <Image style={{ height: 200 }} source={{ uri: filePath.uri }} />
+          <Text
+            style={{
+              color: "blue",
+              fontWeight: "bold",
+              fontSize: 30,
+            }}
+          >
+            {result.label} - {result.score}
+          </Text>
+          <Text>{filePath.uri}</Text>
+          <TouchableOpacity onPress={() => captureImage("photo")}>
+            <Text>Launch Camera for Image</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => {
+              chooseFile("photo");
+            }}
+          >
+            <Text> Choose Image</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Page>
   );
 };
 
-export default DemoPage;
+const Page = styled.View`
+  flex: 1;
+  padding: 10px;
+`;
+
+export default CameraPage;
