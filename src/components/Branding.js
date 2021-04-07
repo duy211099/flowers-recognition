@@ -18,7 +18,7 @@ const Branding = () => {
 const StyledView = styled.View`
   padding: 10px;
   width: 100%;
-  background-color: #52734d;
+  background-color: #56776c;
   border-radius: 20px;
   display: flex;
   flex-direction: row;
