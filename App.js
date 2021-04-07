@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, View } from "react-native";
+import { SafeAreaView, View, Text } from "react-native";
 // screens
 import HomePage from "./src/screens/HomePage";
 import DemoPage from "./src/screens/DemoPage";
@@ -49,17 +49,17 @@ const App = () => {
           name=" "
           component={DemoPage}
           options={{
-            tabBarIcon: ({ color, size }) => (
+            tabBarIcon: ({ color, size, focused }) => (
               <View
                 style={{
                   position: "absolute",
                   height: 70,
                   width: 70,
                   borderRadius: 58,
-                  backgroundColor: "#5a95ff",
+                  backgroundColor: `${focused ? "#5a94ff" : "#76a6ff"}`,
                   justifyContent: "center",
                   alignItems: "center",
-                  borderWidth: 8,
+                  borderWidth: 10,
                   borderColor: "white",
                 }}
               >
