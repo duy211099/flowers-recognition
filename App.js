@@ -11,6 +11,7 @@ import RNPytorch from "./react-native-pytorch";
 // navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,11 +23,78 @@ const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Trang chủ" component={HomePage} />
-        <Tab.Screen name="Khoảnh khắc" component={MomentPage} />
-        <Tab.Screen name=" " component={DemoPage} />
-        <Tab.Screen name="Bộ sưu tập" component={CollectionPage} />
-        <Tab.Screen name="Cài đặt" component={SettingPage} />
+        <Tab.Screen
+          name="Trang chủ"
+          component={HomePage}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Khoảnh khắc"
+          component={MomentPage}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="image-multiple"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name=" "
+          component={DemoPage}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <View
+                style={{
+                  position: "absolute",
+                  height: 70,
+                  width: 70,
+                  borderRadius: 58,
+                  backgroundColor: "#5a95ff",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderWidth: 8,
+                  borderColor: "white",
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="camera"
+                  color="white"
+                  size={size}
+                />
+              </View>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Bộ sưu tập"
+          component={CollectionPage}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="database"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Cài đặt"
+          component={SettingPage}
+          options={{
+            tabBarLabel: "Home",
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="cog" color={color} size={size} />
+            ),
+          }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

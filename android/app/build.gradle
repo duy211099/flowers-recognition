@@ -187,6 +187,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-vector-icons')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:0.64.0'  // From node_modules
