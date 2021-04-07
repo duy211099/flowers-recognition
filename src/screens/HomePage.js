@@ -14,7 +14,7 @@ const HomePage = () => {
 
 const Page = styled.View`
   flex: 1;
-  background-color: #ddffbc;
+  background-color: #91c788;
   padding: 10px;
 `;
 
