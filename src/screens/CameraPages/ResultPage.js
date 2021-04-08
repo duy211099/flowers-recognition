@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, Image, Button } from "react-native";
 import RNPytorch from "../../../react-native-pytorch";
+// components
+import ResultFlower from "../../components/ResultFlower";
 
 const ResultPage = ({ route }) => {
   const { uri } = route.params.filePath;
@@ -14,7 +16,7 @@ const ResultPage = ({ route }) => {
       <Text>{uri}</Text>
       <Image source={{ uri: uri }} style={{ height: 224, width: 224 }} />
       <Button
-        title="Nhào vô!!"
+        title="Kiểm tra"
         onPress={async () => {
           const result = await RNPytorch.predict(route.params.filePath.uri);
           setResult((prevValue) => {
@@ -35,6 +37,7 @@ const ResultPage = ({ route }) => {
       >
         {result.label} - {result.score}
       </Text>
+      <ResultFlower flower={result} />
     </View>
   );
 };

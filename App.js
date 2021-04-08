@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { SafeAreaView, View, Text } from "react-native";
 // screens
 import HomePage from "./src/screens/HomePage";
+import IntroPage from "./src/screens/IntroPage";
 import CameraPage from "./src/screens/CameraPages/CameraPage";
 import CollectionPage from "./src/screens/CollectionPage";
 import MomentPage from "./src/screens/MomentPage";
@@ -20,7 +21,7 @@ const Stack = createStackNavigator();
 
 function CameraStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="Camera">
       <Stack.Screen name="Camera" component={CameraPage} />
       <Stack.Screen name="Result" component={ResultPage} />
     </Stack.Navigator>
@@ -36,24 +37,11 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen
-          name="Trang chủ"
-          component={HomePage}
+          name="Giới thiệu"
+          component={IntroPage}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="home" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Khoảnh khắc"
-          component={MomentPage}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons
-                name="image-multiple"
-                color={color}
-                size={size}
-              />
             ),
           }}
         />
@@ -94,15 +82,6 @@ const App = () => {
                 color={color}
                 size={size}
               />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Cài đặt"
-          component={SettingPage}
-          options={{
-            tabBarIcon: ({ color, size }) => (
-              <MaterialCommunityIcons name="cog" color={color} size={size} />
             ),
           }}
         />
