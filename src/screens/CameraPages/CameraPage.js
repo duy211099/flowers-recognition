@@ -23,8 +23,9 @@ import Spacer from "../../components/Spacer";
 import Branding from "../../components/Branding";
 import MenuButton from "../../components/MenuButton";
 
-const CameraPage = () => {
+const CameraPage = ({ navigation }) => {
   const [filePath, setFilePath] = useState({});
+
   const requestCameraPermission = async () => {
     if (Platform.OS === "android") {
       try {
@@ -76,7 +77,8 @@ const CameraPage = () => {
     let isCameraPermitted = await requestCameraPermission();
     let isStoragePermitted = await requestExternalWritePermission();
     if (isCameraPermitted && isStoragePermitted) {
-      launchCamera(options, (response) => {
+      console.log("chup");
+      await launchCamera(options, (response) => {
         console.log("Response = ", response);
 
         if (response.didCancel) {
@@ -99,19 +101,23 @@ const CameraPage = () => {
         // console.log("fileSize -> ", response.fileSize);
         // console.log("type -> ", response.type);
         // console.log("fileName -> ", response.fileName);
-        setFilePath(response);
+        // console.log("setPath");
+        navigation.navigate("Result", { filePath: response });
       });
     }
   };
-  const chooseFile = (type) => {
+  const chooseFile = async (type) => {
     let options = {
       mediaType: type,
       maxWidth: 224,
       maxHeight: 224,
       quality: 1,
     };
-    launchImageLibrary(options, (response) => {
+    await launchImageLibrary(options, (response) => {
       console.log("Response = ", response);
+
+      console.log("setPath");
+      setFilePath(response);
 
       if (response.didCancel) {
         alert("User cancelled camera picker");
@@ -133,7 +139,8 @@ const CameraPage = () => {
       // console.log("fileSize -> ", response.fileSize);
       // console.log("type -> ", response.type);
       // console.log("fileName -> ", response.fileName);
-      setFilePath(response);
+      console.log("navi");
+      navigation.navigate("Result", { filePath: response });
     });
   };
   const [result, setResult] = useState({
@@ -164,58 +171,19 @@ const CameraPage = () => {
         <MenuButton
           flexGrow="3"
           title="Chụp Ảnh"
-          onPress={() => captureImage("photo")}
+          onPress={() => {
+            captureImage("photo");
+          }}
         />
         <MenuButton
           flexGrow="1"
-          title="Đăng Ảnh"
+          title="Chọn Ảnh"
           onPress={() => {
             chooseFile("photo");
           }}
         />
       </View>
       <MenuButton title="Nhận diện Realtime" />
-
-      <View>
-        <Image source={{ uri: filePath.uri }} />
-        <Button
-          title="Nhào vô!!"
-          onPress={async () => {
-            const result = await RNPytorch.predict(filePath.uri);
-            setResult((prevValue) => {
-              return {
-                ...prevValue,
-                label: result[0].label,
-                score: result[0].confidence,
-              };
-            });
-          }}
-        />
-        <View>
-          <Image style={{ height: 200 }} source={{ uri: filePath.uri }} />
-          <Text
-            style={{
-              color: "blue",
-              fontWeight: "bold",
-              fontSize: 30,
-            }}
-          >
-            {result.label} - {result.score}
-          </Text>
-          <Text>{filePath.uri}</Text>
-          <TouchableOpacity onPress={() => captureImage("photo")}>
-            <Text>Launch Camera for Image</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            onPress={() => {
-              chooseFile("photo");
-            }}
-          >
-            <Text> Choose Image</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
     </Page>
   );
 };

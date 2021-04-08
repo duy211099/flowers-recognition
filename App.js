@@ -6,14 +6,26 @@ import CameraPage from "./src/screens/CameraPages/CameraPage";
 import CollectionPage from "./src/screens/CollectionPage";
 import MomentPage from "./src/screens/MomentPage";
 import SettingPage from "./src/screens/SettingPage";
+import ResultPage from "./src/screens/CameraPages/ResultPage";
 // model
 import RNPytorch from "./react-native-pytorch";
 // navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+function CameraStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Camera" component={CameraPage} />
+      <Stack.Screen name="Result" component={ResultPage} />
+    </Stack.Navigator>
+  );
+}
 
 const App = () => {
   useEffect(async () => {
@@ -47,7 +59,7 @@ const App = () => {
         />
         <Tab.Screen
           name=" "
-          component={CameraPage}
+          component={CameraStack}
           options={{
             tabBarIcon: ({ color, size, focused }) => (
               <View
@@ -56,7 +68,7 @@ const App = () => {
                   height: 70,
                   width: 70,
                   borderRadius: 58,
-                  backgroundColor: `${focused ? "#5a94ff" : "#76a6ff"}`,
+                  backgroundColor: `${focused ? "#5a94ff" : color}`,
                   justifyContent: "center",
                   alignItems: "center",
                   borderWidth: 10,
